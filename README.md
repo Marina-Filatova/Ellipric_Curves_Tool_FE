@@ -48,7 +48,7 @@
 
 1. Склонируйте репозиторий:
    ```bash
-   git clone https://github.com/Marina-Filatova/имя-репозитория.git
+   git clone https://github.com/Marina-Filatova/Ellipric_Curves_Tool_FE.git
    ```
 2. Откройте проект в Android Studio Hedgehog или новее.
 
