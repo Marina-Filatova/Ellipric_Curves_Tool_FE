@@ -1,0 +1,33 @@
+# Скомпилированные файлы и APK
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+bin/
+gen/
+build/
+out/
+
+# Gradle
+.gradle/
+app/build/
+
+# Локальные настройки
+local.properties
+
+# IDE (Android Studio)
+.idea/
+*.iml
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Служебные файлы
+output.txt
+структура_проекта.txt
+
+# Секреты (если есть)
+keystore.properties
+**/google-services.json

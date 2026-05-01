@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Об эллиптических кривых</title>
+    <script type="text/javascript" src="openpgp_new.min.js"></script>
+    <script src="https://kit.fontawesome.com/9c8ab1b57d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
+    <scrit type="text/javascript" src="sweetalert.min.js"></scrit>
+    <script type="text/javascript" src="openpgp.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;subset=latin%2Clatin-ext">
+    <link rel="stylesheet" type="text/css" href="ec.css">
+</head>
+
+<body>
+<div class="menu-fade">
+    <div class="side-bar">
+        <div class="side-bar-header">
+            <div class="app-name conteiner-flex-sidebar"> <img src="incon.png" alt="" class="logo-header">Elliptic Curve Tool</div>
+            <div class="menu-close-bth">
+                <i class="fas fa-times">
+                </i>
+            </div>
+        </div>
+        <hr class="divider"/>
+        <div class="menu">
+            <div class="item">
+                <a class="sub-btn"></i>ℝ<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="reals-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="reals-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i>𝔽p<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="modk-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="modk-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fas fa-key font-size-medium"></i>демонстрационная криптография <i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="encrypt.html" class="sub-item"><i class="fa-solid fa-lock font-size-medium"></i>шифрование</a>
+                    <a href="decrypt.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fa-solid fa-signature"></i></i>криптография на больших модулях<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="ECCbigEnc.html" class="sub-item"><i class="fa-solid fa-lock  font-size-medium"></i>шифрование</a>
+                    <a href="ECCbigDecr.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item"><a href="more.html"><i class="fas fa-book font-size-medium"></i>больше</a></div>
+            <div class="item"><a href="about.html"><i class="fas fa-mug-hot font-size-medium"></i>об авторах</a></div>
+        </div>
+    </div>
+</div>
+<header>
+    <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    <div class="app-name">Elliptic Curve Tool</div>
+    <div class="question-btn"><a href="help.html"><i class="fa-regular fa-circle-question"></i></a></div>
+</header>
+<hr class="divider"/>
+<main>
+    <h1>Об эллиптических кривых</h1>
+    <div class="left holder">
+        <h4>Навигация по разделам</h4>
+        <input type="checkbox" class="read-more-checker" id="read-more-checker">
+        <div class="curve-details" id="curve-details">
+            <ul class="nav-list">
+                <a href="#ec1"><li>❯ Эллиптические кривые над полем вещественных чисел</li></a>
+                <ul>
+                    <a href="#ec2"><li>Эллиптические кривые</li></a>
+                    <a href="#ec3"><li>Сложение точек</li></a>
+                    <a href="#ec4"><li>Скалярное умножение</li></a>
+                </ul>
+                <a href="#ec5"><li>❯ Эллиптические кривые над конечным полем Fp</li></a>
+                <ul>
+                    <a href="#ec6"><li>Сложение точек</li></a>
+                    <a href="#ec7"><li>Порядки группы и подгруппы</li></a>
+                    <a href="#ec8"><li>Базовая точка и дискретный логарифм</li></a>
+                </ul>
+                <a href="#ec9"><li>❯ Криптография на эллиптических кривых</li></a>
+            </ul>
+        </div>
+        <label for="read-more-checker" class="read-more-btn"></label>
+    </div>
+    <div class="text-more">
+        <h4 id="ec1">Эллиптические кривые над полем вещественных чисел</h4>
+        <br>
+        <p class="color-orange left" id="ec2">Эллиптические кривые</p>
+        <p>Если обобщить, эллиптические кривые представляют собой кубические уравнения. Произвольное уравнение третьей степени выглядит следующим образом:</p>
+        <p class="formula"><var>ax<sup>3</sup></var> + <var>bx<sup>2</sup>y</var> + <var>cxy <sup>2</sup></var> + <var>dy<sup>3</sup></var> + <var>fx<sup>2</sup></var> + <var>gxy</var> + <var>hy<sup>2</sup></var> + <var>kx</var> + <var>iy</var> + <var>n</var> = 0</p>
+        <p>Для того чтобы это уравнение задавало эллиптическую кривую оно должно быть невырожденным. В рамках написания выпускной квалификационной работы нет необходимости подробно разбирать это утверждение, но можно упомянуть, что одним из условий является то, что кривая должна состоять из неособых точек. Точка (x0, y0) кривой F (x, y) = 0 называется неособой, если в ней не равны нулю обе частные производные многочлена F (x, y).</p>
+        <div class="formula"> <div class="fraction">
+      <span class="fup">(∂F(
+        <math>
+        <msub>
+          <mtext>x</mtext>
+          <mtext>0</mtext>
+        </msub>
+        </math>
+      ,
+      <math>
+        <msub>
+          <mtext>y</mtext>
+          <mtext>0</mtext>
+        </msub>
+        </math>))</span>
+            <span class="bar">/</span>
+            <span class="fdn">∂x</span>
+        </div> ≠ 0
+            и
+            <div class="fraction">
+        <span class="fup">(∂F(
+          <math>
+            <msub>
+              <mtext>x</mtext>
+              <mtext>0</mtext>
+            </msub>
+            </math>
+            ,
+            <math>
+              <msub>
+                <mtext>y</mtext>
+                <mtext>0</mtext>
+              </msub>
+              </math>))</span>
+                <span class="bar">/</span>
+                <span class="fdn">∂y</span>
+            </div> ≠ 0</div>
+        <p>Кривая называется неособой или гладкой, если все ее точки неособые, то есть в каждой точке этой кривой можно провести касательную:</p>
+        </p>
+        <div class="formula">
+            (x -  <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>0</mtext>
+            </msub>
+        </math>)
+            <div class="fraction">
+          <span class="fup">(∂F(
+            <math>
+            <msub>
+              <mtext>x</mtext>
+              <mtext>0</mtext>
+            </msub>
+            </math>
+          ,
+          <math>
+            <msub>
+              <mtext>y</mtext>
+              <mtext>0</mtext>
+            </msub>
+            </math>))</span>
+                <span class="bar">/</span>
+                <span class="fdn">∂x</span>
+            </div> + (y -  <math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>0</mtext>
+            </msub>
+        </math>)
+            <div class="fraction">
+            <span class="fup">(∂F(
+              <math>
+                <msub>
+                  <mtext>x</mtext>
+                  <mtext>0</mtext>
+                </msub>
+                </math>
+                ,
+                <math>
+                  <msub>
+                    <mtext>y</mtext>
+                    <mtext>0</mtext>
+                  </msub>
+                  </math>))</span>
+                <span class="bar">/</span>
+                <span class="fdn">∂y</span>
+            </div> = 0
+        </div>
+        <p>Путем преобразований можно понять, что выражение кубической кривой, приведенное ранее сводится к достаточно простому виду.</p>
+        <p class="formula"><var>y<sup>2</sup></var> = <var>x<sup>3</sup></var> + <var>ax</var> + <var>b</var></p>
+        <p>При этом возникает дополнительное условие, которое заключается в том, что существует хотя бы одна точка (x0, y0) с рациональными координатами, которая при подстановке в уравнение дает ноль. В дополнение к этому, правая сторона уравнения не должна иметь кратных корней, условие для этого можно сформулировать, прибегнув к понятию <span class="color-orange">дискриминанта</span>, которое для этого уравнения будет иметь следующий вид:</p>
+        <p class="formula">∆ = 4<var>a<sup>3</sup></var> + 27<var>b<sup>2</sup></var></p>
+        <p>Для того чтобы исключить особые кривые, которые не имеют для нас ценности, правая часть этого выражения не должна равняться нулю. Если значение становится равным нулю мы попадаем в особую ситуацию и кривая становится сингулярной. Приложение оповестит Вас об этом предупреждением внизу страницы.
+        </p>
+        <p>Также, при обсуждении эллиптических кривых, нельзя не упомянуть такое важное явление, как 0. 0 – это бесконечно удаленная точка на графике эллиптической кривой, в рамках приложения она также может обозначаться как inf.</p>
+
+        <br>
+        <p class="color-orange left" id="ec3">Сложение точек</p>
+        <p>
+            В этом приложении Вам предоставлена возможность самостоятельно рассмотреть процедуру геометрического сложения, задав свои собственные произвольные параметры эллиптической кривой и координаты точек P и Q.
+        </p>
+        <p>Опишем эту операцию. Тот факт, что точки эллиптической кривой – это абелева группа, позволяет нам утверждать, то P + Q = -R. Тогда, если провести прямую через точки P и Q, она также пройдет через точку R. Тогда, найдя обратную R, можно узнать сумму P + Q. На рисунке 8 представлен пример реализации операции геометрического сложения. </p>
+        <p>Для того чтобы такой способ был полным, необходимо определить, что будет происходить в нетривиальных случаях, тем самым охватив весь спектр вариантов сложения.</p>
+        <p>   - Если P или Q равняется 0. Результат сложения в таком случае будет равняться одной из двух точек. </p>
+        <p>   - Если P = - Q. Прямая в таком случае будет вертикальной и не иметь третьей точки пересечения с ЭК, в результате чего результатом выражения будет бесконечно удаленная точка 0. </p>
+        <p>   - Если P = Q. В такой ситуации, проводимая кривая становится касательной к кривой, вторая точка, которую она пересечет будет R. </p>
+        <p>   - P ≠ Q, но R нет. Этот пункт схож с предыдущим, в таком случае одна из точек становится касательной к кривой, а результатом сложения будет симметричная P или Q точка.
+        </p>
+        <p>Для получения конкретных значений используется процедура <span class="color-orange">алгебраического сложения</span> по следующим формулам:</p>
+        <p>
+            Для случая, когда P ≠ Q, нужно знать, что наклон прямой будет равняться:
+        </p>
+        <div class="formula">
+            m =  <div class="fraction">
+              <span class="fup">(
+                <math>
+                <msub>
+                  <mtext>y</mtext>
+                  <mtext>P</mtext>
+                </msub>
+                </math> -
+
+              <math>
+                <msub>
+                  <mtext> y</mtext>
+                  <mtext>Q</mtext>
+                </msub>
+                </math>)</span>
+            <span class="bar">/</span>
+            <span class="fdn">(
+                <math>
+                <msub>
+                  <mtext>x</mtext>
+                  <mtext>P</mtext>
+                </msub>
+                </math> -
+
+              <math>
+                <msub>
+                  <mtext> x</mtext>
+                  <mtext>Q</mtext>
+                </msub>
+                </math>)</span>
+        </div>
+        </div>
+        <p>Тогда координаты точки R будут вычисляться так:</p>
+        <p class="formula">
+            <math>
+                <msub>
+                    <mtext>x</mtext>
+                    <mtext>R</mtext>
+                </msub>
+            </math> = m<sup>2</sup> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math></p>
+        <p class="formula"><math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> = <math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> + m(<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)</p>
+        <p>или</p>
+        <p class="formula"><math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> = <math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math> + m(<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)</p>
+        <p>Эти формулы также подходят для ситуаций, когда P или Q являются точками касания.
+            В случае же, если P = Q наклон кривой будет вычисляться по-другому:</p>
+        <div class="formula">m = <div class="fraction">
+            <span class="fup">(3<math>
+              <msub>
+                <mtext>x</mtext>
+                <mtext>P</mtext>
+              </msub>
+              </math><sup>2</sup> - a)</span>
+            <span class="bar">/</span>
+            <span class="fdn">2<math>
+              <msub>
+                <mtext>y</mtext>
+                <mtext>P</mtext>
+              </msub>
+              </math></span>
+        </div></div>
+        <p>Для координат формулы остаются неизменными.</p>
+        <br>
+        <p class="color-orange left" id="ec4">Скалярное умножение</p>
+        <p>Для реализации криптографических алгоритмов или простого понимания их работы, необходимо понимать, как в рамках множества, задаваемого уравнением эллиптической кривой, выполняется вычисление кратных точек.</p>
+        <p>Скалярное умножение представляет собой выражение вида:</p>
+        <p>nP = P + P + ⋯ + P (n раз), где n - натуральное число.</p>
+        <p>Это приложение также предоставляет возможность визуализации операции умножения как графически, так и алгебраически, выдавая результат умножения в числовом эквиваленте. </p>
+        <p>Умножение осуществляется по алгоритму сложения-умножения.</p>
+        <p>Для того чтобы найти <span class="color-orange">nP</span> предпринимаются следующие шаги:</p>
+        <ol>
+            <li>Число n представляется в двоичном виде</li>
+            <p class="formula">k = <math>
+                <msub>
+                    <mtext>b</mtext>
+                    <mtext>t</mtext>
+                </msub>
+            </math> <math>
+                <msub>
+                    <mtext>b</mtext>
+                    <mtext>t-1</mtext>
+                </msub>
+            </math>...<math>
+                <msub>
+                    <mtext>b</mtext>
+                    <mtext>0</mtext>
+                </msub>
+            </math>, <math>
+                <msub>
+                    <mtext>b</mtext>
+                    <mtext>i</mtext>
+                </msub>
+            </math> ∈ {0,1} </p>
+            <li>Вычисляются точки 2P,4P,…,2<sup>t</sup>P</li>
+            <li>Вычисляется сумма точек 2<sup>i</sup>P, для которых <math>
+                <msub>
+                    <mtext> b</mtext>
+                    <mtext>i</mtext>
+                </msub>
+            </math> = 1, i = 0, … , t, то есть вычисляется сумма точек, соответствующих значащим битам в двоичном представлении числа n.</li>
+        </ol>
+
+        <br>
+        <h4 id="ec5">Эллиптические кривые над конечным полем Fp</h4>
+        <p>Конечное поле – это множество с конечным числом элементов. Fp – конечное поле характеристики p, где p – простое число. Множество всех целых чисел по модулю p состоит из всех целых чисел от 0 до p-1. Здесь также необходимо применение модульной арифметики, которая привносит некоторые сложности в процедуру деления. </p>
+        <p>Нужно учитывать, что x/y = x*y<sup>-1</sup>, что позволяет нам заменить процедуру деления простым умножением на число, обратное числу в знаменателе. Для вычисления обратного числа будет реализован расширенный алгоритм Евклида, который обладает достаточно небольшой сложностью. </p>
+        <p>Если рассматривать эллиптическую кривую над конечным полем, формулы практически не подвергаются изменениям, но все равно есть необходимость уточнить несколько моментов.</p>
+        <p>В уравнение кривой дбавляется новая характеристика и оно приобретает несколько иной вид.</p>
+        <p class="formula">y<sup>2</sup> ≡ x<sup>3</sup> + ax + b(mod p)</p>
+        <p>Условие дискриминанта также ограничивается значением p:</p>
+        <p class="formula">[4a<sup>3</sup>+27b<sup>2</sup>](mod p) ≠ 0</p>
+        <p>Если подытожить все вместе, формула предстает перед нами в следующем виде:</p>
+        <p class="formula">{(x,y)∈(<math>
+            <msub>
+                <mtext>F</mtext>
+                <mtext>p</mtext>
+            </msub>
+        </math>)<sup>2</sup> | y<sup>2</sup> ≡ x<sup>3</sup> + ax + b(mod p), 4a<sup>3</sup> + 27b<sup>2</sup> ≢  0(mod p)} ∪ {0}</p>
+        <p>Поскольку мы ограничены конечным полем, график эллиптической кривой отображается в виде набора отдельных точек, симметричных относительно оси x. Помимо этого, из-за того, что мы находим над полем вещественных чисел, образованных некоторым простым числом, график не может содержать отрицательных значений.</p>
+        <p><span class="color-orange">Алгоритм поиска точек</span> при рассмотрении кривой над конечным полем, имеет следующие шаги: </p>
+        <ol>
+            <li>x<sup>3</sup> + ax +b (mod p) для всех 0 ≤ x < p</li>
+            <li>y<sup>2</sup>(mod p) для всех 0 ≤ y < p</li>
+            <li>(x, y): y<sup>2</sup> ≡ x<sup>3</sup> + ax + b (mod p), что означает необходимость выбора таких точек, которые удовлетворяют условиям</li>
+            <li>Добавить к списку точек бесконечно удаленную точку 0.</li>
+        </ol>
+        <br>
+        <p class="color-orange left" id="ec6">Сложение точек</p>
+        <p>Для построения алгоритма, реализующего операцию сложения точек кривой над конечным полем, будут использоваться следующие формулы:</p>
+        <p>Для случая, когда P ≠ Q:</p>
+        <p class="formula">m = (<math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)(<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)<sup>-1</sup>(mod p)</p>
+        <p>Тогда координаты точки R будут вычисляться так:</p>
+        <p class="formula"><math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> = (m<sup>2</sup> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)(mod p)</p>
+        <p class="formula"><math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> = [<math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math> + m(<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)](mod p) = [<math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math> + m(<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>R</mtext>
+            </msub>
+        </math> - <math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>Q</mtext>
+            </msub>
+        </math>)](mod p)</p>
+        <p>В случае же, если P = Q наклон кривой будет вычисляться следующим образом: </p>
+        <p class="formula">m = (3<math>
+            <msub>
+                <mtext>x</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math><sup>2</sup> - a)(2<math>
+            <msub>
+                <mtext>y</mtext>
+                <mtext>P</mtext>
+            </msub>
+        </math>)<sup>-1</sup>(mod p)</p>
+        <p>Формулы выше справедливы для любого значения p, представленного простым числом, за исключением 2 и 3, которые являются особенными случаями как над полем, так и над полем вещественных чисел.</p>
+        <br>
+        <p class="color-orange left" id="ec7">Порядки группы и подгруппы</p>
+        <p>Порядком группы является количество точек эллиптической кривой, определенное простым модулем p.</p>
+        <p>Ранее был приведен алгоритм умножении точек для кривых над полем вещественных чисел, при рассмотрении этой же операции над конечным полем возникает несколько важных нюансов, на которые следует обратить внимание при реализации. Если взять какую-либо точку и провести над ней операцию умножения, в конечном итоге можно заметить, что получаемые значения повторяются с некоторой периодичностью. Эта периодичность и задает порядок подгруппы, порождаемый некоторой точкой, что делает эту точку базовой. </p>
+        <p>Порядком n точки P на эллиптической кривой называется наименьшее натуральное число, такое что nP = 0. У этого числа есть важное свойство – оно является делителем для порядка группы. Это приложение также осуществляет поиск группы точек эллиптической кривой и подгруппы, порождаемой точкой P, координаты которой задает сам пользователь.</p>
+        <p><span class="color-orange">Алгоритм вычисления порядка точки эллиптической кривой:</span> берется порядок эллиптической кривой N, для него находятся все делители, после для каждого из них вычисляется nP и такое наименьшее n, при котором получается 0 и есть порядок подгруппы </p>
+        <p>Существую также более быстрые алгоритмы поиска порядка группы, например, алгоритм, использующий теорему Хассе.</p>
+        <br>
+        <p class="color-orange left" id="ec8">Базовая точка и дискретный логарифм</p>
+        <p>Понятие базовой точки очень важно для полного понимания криптографических алгоритмов на эллиптических кривых, но стоит уточнить, что в моем приложении пользователю предоставлена свобода действий в этой области. Существует алгоритм подбора точки, но обычно при реализации какого-либо алгоритма шифрования используются уже готовые кривые с доказанной криптостойкостью, для которой найдена хорошая базовая точка с большим и надежным порядком. То есть, для подобных кривых сначала выбирается достаточный порядок подгруппы, а уже после подбирается точка, которая порождает эту подгруппу. К примеру, в разделе приложения с примером шифрования на кривых с большими числами пользователю на выбор будет представлено некоторое количество кривых, таких, как p-256. </p>
+        <p>Говоря о задаче дискретного логарифмирования, пусть E – эллиптическая кривая, определенная над Fp, P – точка, принадлежащая E. Тогда <span class="color-orange">задача дискретного логарифмирования</span> на Е (с основанием p) – это задача нахождения для Q ϵ Е целого числа m ϵ Z, такого, что mP = Q. Криптография на эллиптических кривых интересна тем, что данная задача решается гораздо труднее, чем для других криптографических алгоритмов, что позволяет при том же количестве бит получить более высокий уровень стойкости ко взломам. </p>
+        <br>
+        <h4 id="ec9">Эллиптические кривые над конечным полем Fp</h4>
+        <p>Для начала определим, что в общем случае для реализации алгоритмов шифрования-дешифрования, необходимы следующие данные: </p>
+        <ul>
+            <li>Сама эллиптическая кривая Еp (a, b) и ее порядок |Ep (a,b)| = N</li>
+            <li>координаты точки G, являющейся базовой</li>
+            <li>порядок подгруппы, определяемый точкой G</li>
+            <li>кофактор подгруппы – h = N/n</li>
+        </ul>
+        <p>В итоге мы получаем следующий набор значений: (p, a, b, G, n, h).</p>
+        <p>Для вычисления пары открытый-закрытый ключ есть следующие правила:</p>
+        <ul>
+            <li>Закрытым ключом d будет случайное число, выбираемое из диапазона от 1 до n-1, где n – простое число, являющееся порядком подгруппы, порожденным базовой точкой G</li>
+            <li>открытый ключ – это точка H = dG, где G-базовая точка.</li>
+        </ul>
+        <p>Значения H и G всегда известны. Для того чтобы найти d и тем самым взломать алгоритм необходимо решить уравнение H = dG, что является решением задачи дискретного логарифмирования и представляется нетривиальной задачей. </p>
+        <p>В приложении Вы имеете возможность шифрования строковых значений посредством использования произвольных значений a, b, d и так далее. Сам реализованный алгоритм содержит следующие шаги: </p>
+        <ol>
+            <li>Вами задается закрытый ключ d и координаты базовой точки P.</li>
+            <li>Вычисляется кратная точка Q = dP.</li>
+            <li>Считывается символ сообщения и представляется в виде числа.</li>
+            <li>Выбирается случайное число k в диапазоне от 1 до n-1, где n – порядок подгруппы.</li>
+            <li>Считается кратная точка Pk(xq, yq) = kP.</li>
+            <li>Считается кратная точка Qk(xq, yq) = kQ.</li>
+            <li>Шифротекст: c = (t*xq)mod p.</li>
+        </ol>
+        <p>Важно предупредить, что при использовании произвольных значений не будет обеспечиваться достаточный уровень надежности шифрования, но данная выпускная квалификационная работа призвана в первую очередь предоставить пользователям возможность интерактивного изучения криптографических алгоритмов.</p>
+        <p>Процедура дешифрования происходит в следующем порядке: </p>
+        <ol>
+            <li>Получение входных значений</li>
+            <li>Вычисление точки D: D(xd, yd) = dPk.</li>
+            <li>Исходное сообщение, t = (c*xd<sup>-1</sup>)mod p, где xd<sup>-1</sup> обратное число к xd по модулю p</li>
+            <li>t здесь – это числовое представление числа по заданному словарю.</li>
+        </ol>
+    </div>
+</main>
+</body>
+<footer>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        //jquery for menu
+        $('.sub-btn').click(function(){
+          $(this).next('.sub-menu').slideToggle();
+          $(this).find('.dropdown').toggleClass('rotate');
+        });
+        //jquery for appearing an desappearing menu
+        $('.menu-btn').click(function(){
+          $('.side-bar').addClass('activate');
+          $('.menu-btn').css("visability", "hidden");
+          $('.menu-fade').fadeIn();
+          return false;
+        });
+
+        $('.menu-close-bth').click(function(){
+          $('.side-bar').removeClass('activate');
+          $('.menu-btn').css("visability", "visible");
+          $(this).parents('.menu-fade').fadeOut();
+          return false;
+        });
+
+
+        $(document).mouseup( function(e){ // событие клика по веб-документу
+            var div = $( ".side-bar" ); // тут указываем ID элемента
+            if ( !div.is(e.target) // если клик был не по нашему блоку
+                && div.has(e.target).length === 0 ) { // и не по его дочерним элементам
+                 $('.side-bar').removeClass('activate');
+                 $('.menu-btn').css("visability", "visible"); // скрываем его
+                 $('.side-bar').parents('.menu-fade').fadeOut();
+                return false;
+          }
+          });
+      });
+  </script>
+</footer>
+</html>

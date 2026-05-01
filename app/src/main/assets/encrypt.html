@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Процедура шифрования</title>
+    <script src="https://kit.fontawesome.com/9c8ab1b57d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
+    <script type="text/javascript" src="enc.js"></script>
+    <scrit type="text/javascript" src="sweetalert.min.js"></scrit>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;subset=latin%2Clatin-ext">
+    <link rel="stylesheet" type="text/css" href="ec.css">
+</head>
+<body>
+<div class="menu-fade">
+    <div class="side-bar">
+        <div class="side-bar-header">
+            <div class="app-name conteiner-flex-sidebar"> <img src="incon.png" alt="" class="logo-header">Elliptic Curve Tool</div>
+            <div class="menu-close-bth">
+                <i class="fas fa-times">
+                </i>
+            </div>
+        </div>
+        <hr class="divider"/>
+        <div class="menu">
+            <div class="item">
+                <a class="sub-btn"></i>ℝ<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="reals-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="reals-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i>𝔽p<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="modk-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="modk-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fas fa-key font-size-medium"></i>демонстрационная криптография <i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="encrypt.html" class="sub-item"><i class="fa-solid fa-lock font-size-medium"></i>шифрование</a>
+                    <a href="decrypt.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fa-solid fa-signature"></i></i>криптография на больших модулях<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="ECCbigEnc.html" class="sub-item"><i class="fa-solid fa-lock  font-size-medium"></i>шифрование</a>
+                    <a href="ECCbigDecr.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item"><a href="more.html"><i class="fas fa-book font-size-medium"></i>больше</a></div>
+            <div class="item"><a href="about.html"><i class="fas fa-mug-hot font-size-medium"></i>об авторах</a></div>
+        </div>
+    </div>
+</div>
+<header>
+    <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    <div class="app-name">Elliptic Curve Tool</div>
+    <div class="question-btn"><a href="help.html"><i class="fa-regular fa-circle-question"></i></a></div>
+</header>
+<hr class="divider"/>
+
+<main>
+
+    <div><h1>Процедура шифрования</h1></div>
+    <p>Этот инструмент позволяет зашифровать сообщение с использованием алгоритма эллиптических кривых (ECC).</p>
+    <p><span class="color-orange" style=" font-weight: bold;">(!)</span> Для процедуры дешифрования Вам понадобится сохранить параметры эллиптической кривой, модуль, закрытый ключ, шифротекст и координаты точки Pk</p>
+    <div class="box">
+        <div id="form">
+            <div id="curve-coefficients" class="parameters">
+                <div><p>Параметры кривой:</p></div>
+                <div class="parameter curve-coefficient"><label for="coefficient-a">a</label><input id="coefficient-a" name="a" value="1"type="number" step="1"></div>
+                <div class="parameter curve-coefficient"><label for="coefficient-b">b</label><input id="coefficient-b" name="b" value="1" type="number" step="1"></div>
+            </div>
+            <div id="field-coefficients" class="parameters">
+                <p>Модуль:</p>
+                <div class="parameter curve-coefficient"><label for="coefficient-p">p</label><input id="coefficient-p" name="p" value="101" type="number" step="1"></div><button id="RoundQuestionMod"><i class="fa-regular fa-circle-question"></i></button>
+                <div class="placeholder"></div>
+            </div>
+            <div id="myPopupMod" class="popup">
+                <div class="popup-content">
+                    <div id="closePopup" class="popup-close-btn color-orange">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <h1 class="color-orange popup-header">Модуль p</h1>
+                    <hr class="divider"/>
+                    <p>Минимальное значение модуля равняется <span class="color-orange"><b>101</b></span> из-за особенностей алгоритма шифрования.<br>
+                        Вы можете использовать меньший модуль при желании, но в таком случае процедура дешифрования будет работать некорректно.</p>
+
+                </div>
+            </div>
+            <div id="scalars" class="parameters">
+                <p><em>Закрытый ключ d</em>:</p>
+                <div class="parameter multiplication-factor"><label for="scalar-n">d</label><input id="scalar-n" name="n" value="2" type="number" step="1"></div>
+                <div class="placeholder"></div>
+            </div>
+            <div id="point-p-coordinates" class="parameters">
+                <p><em>P</em>:</p>
+                <div class="parameter point-coordinate"><label for="point-p-x">x</label><input id="point-p-x" name="px" value="3" type="number" step="1"></div>
+                <div class="parameter point-coordinate"><label for="point-p-y">y</label><input id="point-p-y" name="py" value="6" type="number" step="1"></div>
+            </div>
+            <div id="point-r-coordinates" class="parameters">
+                <div><p><em>Q</em> = <em>n</em> &middot; <em>P</em>:</p></div>
+                <div class="parameter point-coordinate result"><label for="point-q-x">x</label><input id="point-q-x" name="qx" step="any" readonly></div>
+                <div class="parameter point-coordinate result"><label for="point-q-y">y</label><input id="point-q-y" name="qy" step="any" readonly></div>
+            </div>
+            <div id="output" class="parameters">
+                <p>Случайное k:</p>
+                <div class="parameter result"><label for="private-key">k</label><input id="random-k" name="random-k" type="number" value="1"></div><button id="RoundQuestionK"><i class="fa-regular fa-circle-question"></i></button>
+                <div class="placeholder"></div>
+            </div>
+            <div id="myPopupK" class="popup">
+                <div class="popup-content">
+                    <div id="closePopupK" class="popup-close-btn color-orange">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <h1 class="color-orange popup-header">Случайное k</h1>
+                    <hr class="divider"/>
+                    <p>Для рассчета кратных точек выбирается случайное число k <br>(0 < k < n)<br>
+                        Где n - порядок подгруппы.</p>
+                </div>
+            </div>
+            <div id="point-p-coordinates" class="parameters">
+                <p><em>Pk</em>:</p>
+                <div class="parameter point-coordinate"><label for="point-p-x">x</label><input id="point-p-x" name="pkx" type="number" readonly></div>
+                <div class="parameter point-coordinate"><label for="point-p-y">y</label><input id="point-p-y" name="pky" type="number" readonly></div>
+            </div>
+            <div id="point-p-coordinates" class="parameters">
+                <p><em>Qk</em>:</p>
+                <div class="parameter point-coordinate"><label for="point-q-x">x</label><input id="point-q-x" name="qkx" type="number" readonly></div>
+                <div class="parameter point-coordinate"><label for="point-q-y">y</label><input id="point-q-y" name="qky" type="number" readonly></div>
+            </div>
+            <div class="button-container">
+                <button type="button" id="generation-button" class="gen-btn">Сгенерировать k и рассчитать точки</button>
+            </div>
+        </div>
+        <div id="summary">
+            <p>Задана эллиптическая кривая <span class="curve-equation color-orange"></span> на <span class="color-orange">&#120125;<sub class="field-order"></sub></span>.</p>
+            <p>Количество точек - <span class="curve-order color-orange"></span> (включая бесконечно удаленную).</p>
+            <p>Подгруппа, определенная <em>P</em> имеет <span class="subgroup-order color-orange"></span> точек.</p>
+            <p class="curve-singular-warning"><strong class="color-orange">Внимание!</strong> Эта кривая сингулярна.</p>
+            <p class="composite-warning"><strong class="color-orange">Внимание!</strong> <em>p</em> должно быть простым числом.</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="select-container flex-row">
+            <label for="language">Выберите язык сообщения:</label>
+            <div class="select-container-custom">
+                <select id="language" name="language">
+                    <option value="en" selected>Английский</option>
+                    <option value="ru">Русский</option>
+                </select>
+                <i class="fas fa-angle-right dropdown-lang"></i>
+            </div>
+
+        </div>
+        <div class="input-container flex-col">
+            <label for="message">Введите сообщение:</label>
+            <textarea contenteditable="true" class="message-input resize-ta" type="text" id="message" name="mes" placeholder="начните вводить..." type="string"></textarea>
+        </div>
+
+        <div class="results-container flex-col">
+            <label for="message">Результат:</label>
+            <textarea class="message-output resize-ta" id="enc-result" contenteditable="true" name="enc-result" placeholder="здесь будет результат" readonly></textarea>
+        </div>
+        <div class="button-container">
+            <button type="button" id="encrypt-button" class="enc-btn">Зашифровать</button>
+        </div>
+
+    </div>
+</main>
+<script>
+    // попапы для пометок
+    // модуль
+    RoundQuestionMod.addEventListener(
+                "click",
+                function () {
+                  myPopupMod.classList.add("show");
+                }
+            );
+            closePopup.addEventListener(
+                "click",
+                function () {
+                  myPopupMod.classList.remove(
+                        "show"
+                    );
+                }
+            );
+            window.addEventListener(
+                "click",
+                function (event) {
+                    if (event.target == myPopupMod) {
+                        myPopupMod.classList.remove(
+                            "show"
+                        );
+                    }
+                }
+            );
+</script>
+<script>
+      // случайное k
+      RoundQuestionK.addEventListener(
+                "click",
+                function () {
+                  myPopupK.classList.add("show");
+                }
+            );
+            closePopupK.addEventListener(
+                "click",
+                function () {
+                  myPopupK.classList.remove(
+                        "show"
+                    );
+                }
+            );
+            window.addEventListener(
+                "click",
+                function (event) {
+                    if (event.target == myPopupK) {
+                      myPopupK.classList.remove(
+                            "show"
+                        );
+                    }
+                }
+            );
+  </script>
+<script>
+     $(document).ready(function(){
+        //jquery for menu
+        $('.select-container-custom').click(function(){
+          $(this).find('.dropdown-lang').toggleClass('rotate');
+        });
+        });
+  </script>
+<script>
+    function calcHeight(value) {
+        let numberOfLineBreaks = (value.match(/\n/g) || []).length;
+        // min-height + lines x line-height + padding + border
+        let newHeight = 20 + numberOfLineBreaks * 20 + 12 + 2;
+        return newHeight;
+      }
+
+      let textarea = document.querySelector(".resize-ta");
+      textarea.addEventListener("keyup", () => {
+        textarea.style.height = calcHeight(textarea.value) + "px";
+      });
+  </script>
+<script>
+        $(function() {
+            $.ec.curve = new $.ec.modk.ScalarMultiplication();
+        });
+
+        $('.enc-btn').click(function(){
+            $.ec.curve.update();
+            $.ec.curve.recalculate();
+            $.ec.encdata = new $.ec.modk.Encryption();
+        });
+        $('.gen-btn').click(function(){
+          getRandomK();
+          $.ec.curve.update();
+          $.ec.curve.recalculate();
+        });
+    </script>
+<script type="text/javascript">
+      $(document).ready(function(){
+        //jquery for menu
+        $('.sub-btn').click(function(){
+          $(this).next('.sub-menu').slideToggle();
+          $(this).find('.dropdown').toggleClass('rotate');
+        });
+        //jquery for appearing an desappearing menu
+        $('.menu-btn').click(function(){
+          $('.side-bar').addClass('activate');
+          $('.menu-btn').css("visability", "hidden");
+          $('.menu-fade').fadeIn();
+          return false;
+        });
+
+        $('.menu-close-bth').click(function(){
+          $('.side-bar').removeClass('activate');
+          $('.menu-btn').css("visability", "visible");
+          $(this).parents('.menu-fade').fadeOut();
+          return false;
+        });
+
+
+        $(document).mouseup( function(e){ // событие клика по веб-документу
+            var div = $( ".side-bar" ); // тут указываем ID элемента
+            if ( !div.is(e.target) // если клик был не по нашему блоку
+                && div.has(e.target).length === 0 ) { // и не по его дочерним элементам
+                 $('.side-bar').removeClass('activate');
+                 $('.menu-btn').css("visability", "visible"); // скрываем его
+                 $('.side-bar').parents('.menu-fade').fadeOut();
+                return false;
+          }
+          });
+      });
+  </script>
+</body>
+</html>

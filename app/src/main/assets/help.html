@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Помощь</title>
+    <script type="text/javascript" src="openpgp_new.min.js"></script>
+    <script src="https://kit.fontawesome.com/9c8ab1b57d.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
+    <scrit type="text/javascript" src="sweetalert.min.js"></scrit>
+    <script type="text/javascript" src="openpgp.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;subset=latin%2Clatin-ext">
+    <link rel="stylesheet" type="text/css" href="ec.css">
+</head>
+
+<body class="body-help">
+<div class="menu-fade">
+    <div class="side-bar">
+        <div class="side-bar-header">
+            <div class="app-name conteiner-flex-sidebar"> <img src="incon.png" alt="" class="logo-header">Elliptic Curve Tool</div>
+            <div class="menu-close-bth">
+                <i class="fas fa-times">
+                </i>
+            </div>
+        </div>
+        <hr class="divider"/>
+        <div class="menu">
+            <div class="item">
+                <a class="sub-btn"></i>ℝ<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="reals-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="reals-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i>𝔽p<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="modk-add.html" class="sub-item"><i class="fa-solid fa-plus"></i>сложение</a>
+                    <a href="modk-mul.html" class="sub-item"><i class="fa-solid fa-xmark"></i>умножение</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fas fa-key font-size-medium"></i>демонстрационная криптография <i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="encrypt.html" class="sub-item"><i class="fa-solid fa-lock font-size-medium"></i>шифрование</a>
+                    <a href="decrypt.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item">
+                <a class="sub-btn"></i><i class="fa-solid fa-signature"></i></i>криптография на больших модулях<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a href="ECCbigEnc.html" class="sub-item"><i class="fa-solid fa-lock  font-size-medium"></i>шифрование</a>
+                    <a href="ECCbigDecr.html" class="sub-item"><i class="fa-solid fa-unlock font-size-medium"></i>дешифрование</a>
+                </div>
+            </div>
+            <div class="item"><a href="more.html"><i class="fas fa-book font-size-medium"></i>больше</a></div>
+            <div class="item"><a href="about.html"><i class="fas fa-mug-hot font-size-medium"></i>об авторах</a></div>
+        </div>
+    </div>
+</div>
+<header>
+    <div class="menu-btn"><i class="fas fa-bars"></i></div>
+    <div class="app-name">Как пользоваться?</div>
+    <div class="question-btn"><a href="help.html"><i style="display: none;" class="fa-regular fa-circle-question"></i></a></div>
+</header>
+<hr class="divider"/>
+<main>
+    <div class="text-help">
+        <div class="question"><h4>Как перенести все данные из раздела шифрования в раздел дешифрования?</h4><i class="fas fa-angle-right dropdown"></i>
+            <div class="sub-question">
+                <div class="question-text">
+                    <p>Обычно смартфоны предоставляют доступ к истории буфера обмена.</p>
+                    <br>
+                    <div><video class="video-copy" controls playsinline poster="help/poster.jpg">
+                        <source src="help/help1.mp4">
+                        К сожалению, не удалось загрузить вспомогающее видео :с
+                    </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="question"><h4>Какие параметры мне надо сохранить для дешифрования?</h4><i class="fas fa-angle-right dropdown"></i>
+            <div class="sub-question">
+                <div class="question-text">
+                    <p>Для дешифрования с большими модулями Вам понадобится парольная фраза, закрытый ключ и результат шифрования.</p>
+                    <p>Для дешифрования в демонстрационной криптографии Вам понадобятся параметры эллиптической кривой, модуль, закрытый ключ, шифротекст и координаты точки Pk.</p>
+                </div>
+            </div>
+        </div>
+        <div class="question"><h4>Почему я должен выбирать язык <br>при шифровании?</h4><i class="fas fa-angle-right dropdown"></i>
+            <div class="sub-question">
+                <div class="question-text">
+                    Для того чтобы уменьшить возможный модуль было создано два словаря. Если использовать ASKII при шифровании, минимальный модуль будет равен 239.
+                </div>
+            </div>
+        </div>
+        <div class="question"><h4>У меня нет минуса на клавиатуре. Почему?</h4><i class="fas fa-angle-right dropdown"></i>
+            <div class="sub-question">
+                <div class="question-text">
+                    <p>Это может быть особенность смартфонов Samsung. В любом случае, для того чтобы вставить этот символ, наберите его в стороннем приложении, скопируйте и вставьте в нужное место.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</main>
+</body>
+<footer>
+    <script type="text/javascript">
+    // скрипт для FaQ
+    $(document).ready(function(){
+        $('.question').click(function(){
+          $(this).find('.sub-question').slideToggle();
+          $(this).find('.dropdown').toggleClass('rotate');
+        });
+      });
+  </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        //jquery for menu
+        $('.sub-btn').click(function(){
+          $(this).next('.sub-menu').slideToggle();
+          $(this).find('.dropdown').toggleClass('rotate');
+        });
+        //jquery for appearing an desappearing menu
+        $('.menu-btn').click(function(){
+          $('.side-bar').addClass('activate');
+          $('.menu-btn').css("visability", "hidden");
+          $('.menu-fade').fadeIn();
+          return false;
+        });
+
+        $('.menu-close-bth').click(function(){
+          $('.side-bar').removeClass('activate');
+          $('.menu-btn').css("visability", "visible");
+          $(this).parents('.menu-fade').fadeOut();
+          return false;
+        });
+
+
+        $(document).mouseup( function(e){ // событие клика по веб-документу
+            var div = $( ".side-bar" ); // тут указываем ID элемента
+            if ( !div.is(e.target) // если клик был не по нашему блоку
+                && div.has(e.target).length === 0 ) { // и не по его дочерним элементам
+                 $('.side-bar').removeClass('activate');
+                 $('.menu-btn').css("visability", "visible"); // скрываем его
+                 $('.side-bar').parents('.menu-fade').fadeOut();
+                return false;
+          }
+          });
+      });
+  </script>
+</footer>
+</html>
